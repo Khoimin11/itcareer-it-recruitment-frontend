@@ -18,15 +18,17 @@ export const Header = () => {
       <header className="bg-[#000071] py-[15px] px-[16px]">
         <div className="container mx-auto">
           {/* Wrap */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center gap-x-[28px]">
             {/* Logo */}
             <Link href="/" className="text-white font-[800] sm:text-[28px] text-[20px] lg:flex-none flex-1">
               28.ITJobs
             </Link>
             {/* Menu */}
-            <HeaderMenu showMenu={showMenu} />
+            <HeaderMenu showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
             {/* Account */}
-            <HeaderAccount />
+            <div className="lg:ml-auto">
+              <HeaderAccount />
+            </div>
             {/* Button Menu Mobile */}
             <button 
               onClick={handleShowMenu}
