@@ -21,7 +21,7 @@ export const Header = () => {
           <div className="flex items-center gap-x-[28px]">
             {/* Logo */}
             <Link href="/" className="text-white font-[800] sm:text-[28px] text-[20px] lg:flex-none flex-1">
-              28.ITJobs
+              ITcareer
             </Link>
             {/* Menu */}
             <HeaderMenu showMenu={showMenu} onCloseMenu={() => setShowMenu(false)} />
