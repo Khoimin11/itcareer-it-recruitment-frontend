@@ -10,7 +10,7 @@ import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 export const JobList = () => {
   const [jobList, setJobList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState();
+  const [totalPage, setTotalPage] = useState<number>(0);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list?page=${page}`, {
@@ -110,7 +110,13 @@ export const JobList = () => {
         })}
       </div>
 
-      {totalPage && (
+      {jobList.length === 0 && (
+        <div className="rounded-[8px] bg-white px-[20px] py-[24px] text-[16px] text-[#414042]">
+          Chưa có công việc nào.
+        </div>
+      )}
+
+      {totalPage > 0 && (
         <div className="mt-[30px]">
           <select 
             name="" 
