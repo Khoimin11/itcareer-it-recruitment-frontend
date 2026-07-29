@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import JustValidate from "just-validate";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 export const FormLogin = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get("returnTo");
+  const redirectPath = returnTo && returnTo.startsWith("/") ? returnTo : "/";
 
   useEffect(() => {
     const validator = new JustValidate("#loginForm");
@@ -71,7 +74,7 @@ export const FormLogin = () => {
             }
   
             if(data.code == "success") {
-              router.push("/");
+              router.push(redirectPath);
             }
           })
       });

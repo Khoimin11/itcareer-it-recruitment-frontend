@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useAuth } from "@/hooks/useAuth"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FaBuilding, FaUser } from "react-icons/fa6";
 
 const AvatarCircle = (props: {
@@ -36,6 +36,11 @@ const AvatarCircle = (props: {
 export const HeaderAccount = () => {
   const { isLogin, infoUser, infoCompany } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPath = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+  const userLoginLink = `/user/login?returnTo=${encodeURIComponent(currentPath)}`;
+  const userRegisterLink = `/user/register?returnTo=${encodeURIComponent(currentPath)}`;
 
   const handleLogout = (linkRedirect: string) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
@@ -125,11 +130,11 @@ export const HeaderAccount = () => {
           </>
         ) : (
           <>
-            <Link href="/user/login" className="">
+            <Link href={userLoginLink} className="">
               Đăng Nhập
             </Link>
             <span className="">/</span>
-            <Link href="/user/register" className="">
+            <Link href={userRegisterLink} className="">
               Đăng Ký
             </Link>
           </>
