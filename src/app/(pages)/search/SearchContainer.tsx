@@ -71,7 +71,7 @@ export const SearchContainer = () => {
     <>
       <div className="container mx-auto px-[16px]">
         <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-          {totalRecord} viec lam
+          {totalRecord} việc làm
           {keywordLabel && (
             <>
               : 
@@ -94,7 +94,7 @@ export const SearchContainer = () => {
             onChange={handleFilterPosition}
             defaultValue={position}
           >
-            <option value="">Cap bac</option>
+            <option value="">Cấp bậc</option>
             {positionList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
@@ -105,7 +105,7 @@ export const SearchContainer = () => {
             onChange={handleFilterWorkingForm}
             defaultValue={workingForm}
           >
-            <option value="">Hinh thuc lam viec</option>
+            <option value="">Hình thức làm việc</option>
             {workingFormList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
@@ -120,7 +120,7 @@ export const SearchContainer = () => {
 
         {totalRecord === 0 && (
           <div className="rounded-[8px] bg-white px-[20px] py-[24px] text-[16px] text-[#414042]">
-            Khong tim thay cong viec phu hop voi bo loc hien tai.
+            Không tìm thấy công việc phù hợp với bộ lọc hiện tại.
           </div>
         )}
 
