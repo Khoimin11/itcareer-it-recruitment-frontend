@@ -94,8 +94,8 @@ export const HeaderMenu = (
           children: null
         },
         {
-          name: "ABC.LTD",
-          link: "/search?company=ABC.LTD",
+          name: "MKTravel.LTD",
+          link: "/search?company=MKTravel.LTD",
           children: null
         }
       ]

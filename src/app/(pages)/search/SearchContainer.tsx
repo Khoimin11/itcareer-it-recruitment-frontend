@@ -16,8 +16,9 @@ export const SearchContainer = () => {
   const workingForm = searchParams.get("workingForm") || "";
   const [jobList, setJobList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState();
-  const [totalRecord, setTotalRecord] = useState();
+  const [totalPage, setTotalPage] = useState<number>(0);
+  const [totalRecord, setTotalRecord] = useState<number>(0);
+  const keywordLabel = [language, city, company, keyword].filter(Boolean).join(" ");
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}&position=${position}&workingForm=${workingForm}&page=${page}`)
@@ -30,6 +31,10 @@ export const SearchContainer = () => {
         }
       })
   }, [language, city, company, keyword, position, workingForm, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [language, city, company, keyword, position, workingForm]);
 
   const handleFilterPosition = (event: any) => {
     const value = event.target.value;
@@ -65,14 +70,17 @@ export const SearchContainer = () => {
   return (
     <>
       <div className="container mx-auto px-[16px]">
-        {totalRecord && (
-          <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {totalRecord} việc làm: 
-            <span className="text-[#0088FF] ml-[6px]">
-              {language} {city} {company} {keyword}
-            </span>
-          </h2>
-        )}
+        <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
+          {totalRecord} viec lam
+          {keywordLabel && (
+            <>
+              : 
+              <span className="text-[#0088FF] ml-[6px]">
+                {keywordLabel}
+              </span>
+            </>
+          )}
+        </h2>
         
         <div 
           className="bg-white rounded-[8px] py-[10px] px-[20px] mb-[30px] flex flex-wrap gap-[12px]"
@@ -86,7 +94,7 @@ export const SearchContainer = () => {
             onChange={handleFilterPosition}
             defaultValue={position}
           >
-            <option value="">Cấp bậc</option>
+            <option value="">Cap bac</option>
             {positionList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
@@ -97,7 +105,7 @@ export const SearchContainer = () => {
             onChange={handleFilterWorkingForm}
             defaultValue={workingForm}
           >
-            <option value="">Hình thức làm việc</option>
+            <option value="">Hinh thuc lam viec</option>
             {workingFormList.map((item, index) => (
               <option key={index} value={item.value}>{item.label}</option>
             ))}
@@ -110,12 +118,19 @@ export const SearchContainer = () => {
           ))}
         </div>
 
-        {totalPage && (
+        {totalRecord === 0 && (
+          <div className="rounded-[8px] bg-white px-[20px] py-[24px] text-[16px] text-[#414042]">
+            Khong tim thay cong viec phu hop voi bo loc hien tai.
+          </div>
+        )}
+
+        {totalPage > 0 && (
         <div className="mt-[30px]">
           <select 
             name="" 
             className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
             onChange={handlePagination}
+            value={page}
           >
             {Array(totalPage).fill("").map((item, index) => (
               <option key={index} value={index+1}>Trang {index+1}</option>
