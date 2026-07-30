@@ -70,10 +70,12 @@ export const HeaderMenu = (
       name: "Top Công Ty IT",
       link: "/company/list",
       children: [
-        { name: "FPT Software", link: "/search?company=FPT Software" },
-        { name: "Techcombank", link: "/search?company=Techcombank" },
+        { name: "LG Electronics", link: "/search?company=LG Electronics" },
+        { name: "NAB Innovation Centre Vietnam", link: "/search?company=NAB Innovation Centre Vietnam" },
+        { name: "Thoughtworks Vietnam", link: "/search?company=Thoughtworks Vietnam" },
+        { name: "SHBFinance", link: "/search?company=SHBFinance" },
         { name: "MB Bank", link: "/search?company=MB Bank" },
-        { name: "MKTravel.LTD", link: "/search?company=MKTravel.LTD" }
+        { name: "Samsung Electronics", link: "/search?company=Samsung Electronics" }
       ]
     },
     {
