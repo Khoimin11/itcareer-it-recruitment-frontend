@@ -11,6 +11,7 @@ export const JobList = () => {
   const [jobList, setJobList] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState<number>(0);
+  const [totalRecord, setTotalRecord] = useState<number>(0);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list?page=${page}`, {
@@ -22,6 +23,7 @@ export const JobList = () => {
         if(data.code == "success") {
           setJobList(data.jobs);
           setTotalPage(data.totalPage);
+          setTotalRecord(data.totalRecord || 0);
         }
       })
   }, [page]);
@@ -33,10 +35,15 @@ export const JobList = () => {
 
   const handleDeleteSuccess = (id: string) => {
     setJobList(prev => prev.filter(job => job.id !== id));
+    setTotalRecord(prev => Math.max(0, prev - 1));
   }
 
   return (
     <>
+      <div className="mb-[20px] font-[400] text-[16px] text-[#414042]">
+        Tổng số công việc: <span className="font-[700] text-[#121212]">{totalRecord}</span>
+      </div>
+
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
         {jobList.map(item => {
           const position = positionList.find(itemPos => itemPos.value == item.position)?.label;
@@ -119,6 +126,7 @@ export const JobList = () => {
       {totalPage > 0 && (
         <div className="mt-[30px]">
           <select 
+            value={page}
             name="" 
             className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
             onChange={handlePagination}
