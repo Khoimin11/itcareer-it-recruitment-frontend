@@ -1,19 +1,18 @@
-import { Metadata } from "next"
-import { SearchContainer } from "./SearchContainer"
+import { Suspense } from "react";
+import { Metadata } from "next";
+import { SearchContainer } from "./SearchContainer";
 
 export const metadata: Metadata = {
-  title: "Kết quả tìm kiếm",
-  description: "Kết quả tìm kiếm công việc...",
-}
+  title: "Ket qua tim kiem",
+  description: "Ket qua tim kiem cong viec...",
+};
 
 export default function SearchPage() {
   return (
-    <>
-      {/* Kết quả tìm kiếm */}
-      <div className="py-[60px]">
+    <div className="py-[60px]">
+      <Suspense fallback={null}>
         <SearchContainer />
-      </div>
-      {/* Hết Kết quả tìm kiếm */}
-    </>
-  )
+      </Suspense>
+    </div>
+  );
 }
