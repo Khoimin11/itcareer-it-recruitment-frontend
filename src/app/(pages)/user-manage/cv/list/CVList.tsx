@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { ButtonDelete } from "@/app/components/button/ButtonDelete";
 import { cvStatusList, positionList, workingFormList } from "@/config/variable";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -26,6 +27,16 @@ export const CVList = () => {
         }
       });
   }, []);
+
+  const handleDeleteSuccess = (id: string) => {
+    setListCV((prev) => {
+      const nextList = prev.filter((cv) => cv.id !== id);
+      const nextTotalPages = Math.max(1, Math.ceil(nextList.length / ITEMS_PER_PAGE));
+
+      setCurrentPage((current) => (current > nextTotalPages ? nextTotalPages : current));
+      return nextList;
+    });
+  };
 
   if (listCV.length === 0) {
     return (
@@ -95,17 +106,16 @@ export const CVList = () => {
               </div>
               <div className="flex flex-wrap items-center justify-center gap-[8px] mt-[12px] mb-[20px] mx-[10px]">
                 <Link
-                  href="#"
+                  href={`/user-manage/cv/detail/${item.id}`}
                   className="bg-[#0088FF] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]"
                 >
                   Xem
                 </Link>
-                <Link
-                  href="#"
-                  className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]"
-                >
-                  Xóa
-                </Link>
+                <ButtonDelete
+                  api={`${process.env.NEXT_PUBLIC_API_URL}/user/cv/delete/${item.id}`}
+                  item={item}
+                  onDeleteSuccess={handleDeleteSuccess}
+                />
               </div>
             </div>
           );
