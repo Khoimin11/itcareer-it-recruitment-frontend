@@ -39,8 +39,10 @@ export const HeaderAccount = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPath = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-  const userLoginLink = `/user/login?returnTo=${encodeURIComponent(currentPath)}`;
-  const userRegisterLink = `/user/register?returnTo=${encodeURIComponent(currentPath)}`;
+  const authPaths = ["/user/login", "/user/register", "/company/login", "/company/register"];
+  const returnToPath = authPaths.includes(pathname) ? "/" : currentPath;
+  const userLoginLink = `/user/login?returnTo=${encodeURIComponent(returnToPath)}`;
+  const userRegisterLink = `/user/register?returnTo=${encodeURIComponent(returnToPath)}`;
 
   const handleLogout = (linkRedirect: string) => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
