@@ -1,18 +1,7 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
-  if(token) {
-    return NextResponse.next();
-  } else {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
-}
+import { NextResponse } from "next/server";
 
-export const config = {
-  matcher: [
-    '/user-manage/:path*',
-    '/company-manage/:path*',
-  ],
+// The auth cookie is set by the Render backend domain, so the Vercel-hosted
+// frontend cannot reliably inspect it in middleware on production.
+export function middleware() {
+  return NextResponse.next();
 }
