@@ -18,18 +18,30 @@ export const Section1 = () => {
   const router = useRouter();
   const [cityList, setCityList] = useState<any[]>([]);
   const [selectedCity, setSelectedCity] = useState("");
+  const [cityLoadError, setCityLoadError] = useState(false);
+  const [cityLoadAttempt, setCityLoadAttempt] = useState(0);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/city/list`)
-      .then((res) => res.json())
+    const controller = new AbortController();
+    setCityLoadError(false);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/city/list`, { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error("City list failed");
+        return res.json();
+      })
       .then((data) => {
+        if (controller.signal.aborted) return;
         if (data.code === "success") {
           setCityList([...(data.cityList || [])].sort(
             (a, b) => getCityPriority(a.name) - getCityPriority(b.name)
           ));
-        }
+        } else throw new Error("City list failed");
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setCityLoadError(true);
       });
-  }, []);
+    return () => controller.abort();
+  }, [cityLoadAttempt]);
 
   const handleSearch = (event: any) => {
     event.preventDefault();
@@ -72,6 +84,10 @@ export const Section1 = () => {
               <FaMagnifyingGlass aria-hidden="true" className="text-lg" /> Tìm kiếm
             </button>
           </form>
+          {cityLoadError && <p role="alert" className="mb-5 text-sm text-white">
+            Chưa tải được danh sách thành phố.
+            <button type="button" onClick={() => setCityLoadAttempt(attempt => attempt + 1)} className="ml-2 rounded px-1 font-medium underline underline-offset-4 hover:text-sky-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-300">Thử lại</button>
+          </p>}
           <div className="flex flex-col md:flex-row md:items-start gap-x-[12px] gap-y-[15px]">
             <div className="text-[#DEDEDE] font-[500] text-[16px] shrink-0 pt-[8px]">
               Mọi người đang tìm kiếm:
