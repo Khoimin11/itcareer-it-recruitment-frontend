@@ -7,6 +7,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export const FormRegiter = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -65,6 +66,16 @@ export const FormRegiter = () => {
           errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
         },
       ])
+      .addField('#confirmPassword', [
+        {
+          rule: 'required',
+          errorMessage: 'Vui lòng nhập lại mật khẩu!',
+        },
+        {
+          validator: (value: string) => value === document.querySelector<HTMLInputElement>('#password')?.value,
+          errorMessage: 'Mật khẩu xác nhận không khớp!',
+        },
+      ])
       .onSuccess((event: any) => {
         const fullName = event.target.fullName.value;
         const email = event.target.email.value;
@@ -94,7 +105,8 @@ export const FormRegiter = () => {
             }
           })
       });
-  }, []);
+    return () => validator.destroy();
+  }, [router]);
 
   return (
     <>
@@ -147,7 +159,33 @@ export const FormRegiter = () => {
           </div>
         </div>
         <div className="">
-          <button className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
+          <label htmlFor="confirmPassword" className="block font-[500] text-[14px] text-black mb-[5px]">
+            Xác nhận mật khẩu *
+          </label>
+          <div className="relative">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              id="confirmPassword"
+              autoComplete="new-password"
+              aria-required="true"
+              className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] pl-[20px] pr-[52px] font-[500] text-[14px] text-black"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(value => !value)}
+              aria-label={showConfirmPassword ? "Ẩn mật khẩu xác nhận" : "Hiện mật khẩu xác nhận"}
+              aria-pressed={showConfirmPassword}
+              aria-controls="confirmPassword"
+              title={showConfirmPassword ? "Ẩn mật khẩu xác nhận" : "Hiện mật khẩu xác nhận"}
+              className="absolute right-[4px] top-0 flex h-[46px] w-[44px] items-center justify-center rounded-[4px] text-gray-500 hover:text-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0088FF]"
+            >
+              {showConfirmPassword ? <FaEyeSlash aria-hidden="true" /> : <FaEye aria-hidden="true" />}
+            </button>
+          </div>
+        </div>
+        <div className="">
+          <button type="submit" className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
             Đăng ký
           </button>
         </div>
