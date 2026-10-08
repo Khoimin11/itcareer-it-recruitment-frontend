@@ -2,19 +2,31 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { formatCityName } from "@/utils/city";
+import { FilterSelect } from "@/app/components/form/FilterSelect";
 import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6"
+
+const cityPriority = ["Hồ Chí Minh", "Hà Nội", "Đà Nẵng"];
+
+const getCityPriority = (name: string) => {
+  const index = cityPriority.indexOf(formatCityName(name));
+  return index === -1 ? cityPriority.length : index;
+};
 
 export const Section1 = () => {
   const router = useRouter();
   const [cityList, setCityList] = useState<any[]>([]);
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/city/list`)
       .then((res) => res.json())
       .then((data) => {
         if (data.code === "success") {
-          setCityList(data.cityList || []);
+          setCityList([...(data.cityList || [])].sort(
+            (a, b) => getCityPriority(a.name) - getCityPriority(b.name)
+          ));
         }
       });
   }, []);
@@ -45,20 +57,19 @@ export const Section1 = () => {
           </h1>
           <form 
             onSubmit={handleSearch}
-            action="" 
-            className="flex flex-wrap gap-x-[15px] gap-y-[12px] mb-[30px]"
+            role="search"
+            aria-label="Tìm kiếm việc làm IT"
+            className="mb-[30px] grid grid-cols-1 gap-3 md:grid-cols-[240px_minmax(0,1fr)_200px] md:gap-4"
           >
-            <select name="city" className="bg-white md:w-[240px] w-[100%] h-[56px] rounded-[4px] px-[20px] font-[500] text-[16px] text-[#121212]">
-              <option value="">Tất cả thành phố</option>
-              {cityList.map((city) => (
-                <option key={city._id} value={city.name}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
-            <input type="text" name="keyword" placeholder="Nhập từ khóa..." className="md:flex-1 flex-none w-[100%] bg-white h-[56px] rounded-[4px] px-[20px] font-[500] text-[16px]" />
-            <button className="bg-[#0088FF] md:w-[240px] w-[100%] h-[56px] rounded-[4px] font-[500] text-[16px] text-white inline-flex items-center justify-center">
-              <FaMagnifyingGlass className="text-[20px] mr-[10px]" /> Tìm Kiếm
+            <FilterSelect id="home-search-city" name="city" label="Địa điểm" variant="home"
+              value={selectedCity} onChange={setSelectedCity}
+              options={[{ value: "", label: "Tất cả thành phố" }, ...cityList.map(city => ({ value: city.name, label: formatCityName(city.name) }))]} />
+            <div className="min-w-0">
+              <label htmlFor="home-search-keyword" className="sr-only">Vị trí hoặc kỹ năng</label>
+              <input id="home-search-keyword" type="search" name="keyword" placeholder="Nhập từ khóa..." className="h-14 w-full min-w-0 rounded-lg border border-slate-200 bg-white px-5 text-base text-slate-900 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300" />
+            </div>
+            <button type="submit" className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[#0070d8] px-5 text-base font-semibold text-white transition-colors hover:bg-[#0061bd] active:bg-[#0056a8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300 motion-reduce:transition-none">
+              <FaMagnifyingGlass aria-hidden="true" className="text-lg" /> Tìm kiếm
             </button>
           </form>
           <div className="flex flex-col md:flex-row md:items-start gap-x-[12px] gap-y-[15px]">

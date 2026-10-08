@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import { positionList, workingFormList } from "@/config/variable";
+import { formatCityName } from "@/utils/city";
 import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 
@@ -54,7 +55,7 @@ export const CardJobItem = (props: {
           <FaBriefcase className="text-[16px]" /> {workingForm}
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-          <FaLocationDot className="text-[16px]" /> {item.companyCity}
+          <FaLocationDot className="text-[16px]" /> {formatCityName(item.companyCity)}
         </div>
         <div className="mt-[12px] mb-[20px] mx-[16px] flex flex-wrap justify-center gap-[8px]">
           {item.technologies.map((itemTech: string, indexTech: number) => (

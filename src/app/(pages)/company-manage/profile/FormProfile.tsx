@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { useAuth } from "@/hooks/useAuth"
+import { formatCityName } from "@/utils/city";
 import { useEffect, useRef, useState } from "react";
 import JustValidate from "just-validate";
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -175,7 +176,7 @@ export const FormProfile = () => {
             >
               <option value="">-- Chọn thành phố --</option>
               {cityList.map(item => (
-                <option value={item._id} key={item._id}>{item.name}</option>
+                <option value={item._id} key={item._id}>{formatCityName(item.name)}</option>
               ))}
             </select>
           </div>
