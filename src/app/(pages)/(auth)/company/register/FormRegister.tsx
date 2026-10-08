@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import JustValidate from "just-validate";
 import { useRouter } from "next/navigation";
 
 export const FormRegister = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -118,12 +120,26 @@ export const FormRegister = () => {
           <label htmlFor="password" className="block font-[500] text-[14px] text-black mb-[5px]">
             Mật khẩu *
           </label>
-          <input 
-            type="password" 
-            name="password" 
-            id="password" 
-            className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              id="password"
+              autoComplete="new-password"
+              className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] pl-[20px] pr-[52px] font-[500] text-[14px] text-black"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(value => !value)}
+              aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+              aria-pressed={showPassword}
+              aria-controls="password"
+              title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+              className="absolute right-[4px] top-0 flex h-[46px] w-[44px] items-center justify-center rounded-[4px] text-gray-500 hover:text-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0088FF]"
+            >
+              {showPassword ? <FaEyeSlash aria-hidden="true" /> : <FaEye aria-hidden="true" />}
+            </button>
+          </div>
         </div>
         <div className="">
           <button className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
