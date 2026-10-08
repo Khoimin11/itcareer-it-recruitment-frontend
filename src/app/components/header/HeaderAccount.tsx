@@ -60,7 +60,7 @@ export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
       <div className="account-panel">
         <div className="account-panel-heading"><strong>{name}</strong><span>{isCompany ? "Nhà tuyển dụng" : "Ứng viên"}</span></div>
         <Link href={profilePath} onClick={onNavigate}>{isCompany ? <FiBriefcase aria-hidden="true" /> : <FiUser aria-hidden="true" />}{isCompany ? "Thông tin công ty" : "Thông tin cá nhân"}</Link>
-        {!isCompany && <button type="button" className="account-option"><FiPaperclip aria-hidden="true" />Hồ sơ đính kèm</button>}
+        {!isCompany && <Link href="/user-manage/attachments" onClick={onNavigate}><FiPaperclip aria-hidden="true" />Hồ sơ đính kèm</Link>}
         {isCompany && <Link href="/company-manage/job/list" onClick={onNavigate}>Quản lý công việc</Link>}
         <Link href={isCompany ? "/company-manage/cv/list" : "/user-manage/cv/list"} onClick={onNavigate}><FiFileText aria-hidden="true" />{isCompany ? "Quản lý CV" : "CV đã ứng tuyển"}</Link>
         {!isCompany && <button type="button" className="account-option"><FiSettings aria-hidden="true" />Cài đặt</button>}
