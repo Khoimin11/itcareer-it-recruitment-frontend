@@ -9,13 +9,25 @@ export const useAuth = () => {
   const pathname = usePathname(); // Lấy URL hiện tại
 
   useEffect(() => {
+    const controller = new AbortController();
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check`, {
       credentials: "include", // Gửi kèm cookie
+      signal: controller.signal,
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Auth check failed: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        if (controller.signal.aborted) return;
+
         if(data.code == "error") {
           setIsLogin(false);
+          setInfoUser(null);
+          setInfoCompany(null);
         }
 
         if(data.code == "success") {
@@ -31,7 +43,16 @@ export const useAuth = () => {
             setInfoUser(null);
           }
         }
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+
+        setIsLogin(false);
+        setInfoUser(null);
+        setInfoCompany(null);
       });
+
+    return () => controller.abort();
   }, [pathname]);
 
   return { isLogin, infoUser, infoCompany };
