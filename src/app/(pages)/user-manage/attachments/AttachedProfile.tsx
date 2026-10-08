@@ -97,7 +97,7 @@ export const AttachedProfile = () => {
 
       <section className="attachment-card" aria-labelledby="basic-heading">
         {editButton("basic", "Chỉnh sửa thông tin cơ bản")}
-        <div className="attachment-person"><div className="attachment-avatar" aria-hidden="true">MK</div><div><span className="attachment-eyebrow">Thông tin cơ bản</span><h2 id="basic-heading">{basic.fullName}</h2><p>{basic.title}</p></div></div>
+        <div className="attachment-person"><div className="attachment-avatar" aria-hidden="true">MK</div><div><h2 id="basic-heading">{basic.fullName}</h2><p>{basic.title}</p></div></div>
         <div className="attachment-details">
           <Detail icon={<FiMail />}><a href={`mailto:${basic.email}`}>{basic.email}</a></Detail>
           <Detail icon={<FiPhone />}><a href={`tel:${basic.phone}`}>{basic.phone}</a></Detail>
@@ -110,7 +110,6 @@ export const AttachedProfile = () => {
 
       <section className="attachment-card" aria-labelledby="cv-heading">
         <div className="attachment-section-heading"><h2 id="cv-heading">CV của tôi</h2><span className="attachment-tag">CV cá nhân</span></div>
-        <p className="attachment-description">Một CV đại diện cho bạn trên trang cá nhân, độc lập với CV đã nộp ứng tuyển từng công ty.</p>
         <div className="attachment-cv-file"><span className="attachment-file-icon"><FiFileText aria-hidden="true" /></span><div className="attachment-file-info"><button type="button" onClick={() => startEdit("preview")}>{cvName}</button><p>Cập nhật lần cuối: {cvDate}{cv && ` · ${(cv.size / 1024).toFixed(0)} KB`}</p></div><button type="button" className="attachment-edit" aria-label="Xem CV" onClick={() => startEdit("preview")}><FiEye aria-hidden="true" /></button></div>
         <div className="attachment-upload-row"><input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="attachment-file-input" aria-label="Chọn CV cá nhân" onChange={chooseCV} /><button type="button" className="attachment-outline" onClick={() => fileRef.current?.click()}><FiUpload aria-hidden="true" />{cv ? "Thay CV khác" : "Tải CV lên"}</button><span>Chỉ giữ một CV. Tệp mới sẽ thay thế tệp hiện tại.</span></div>
         <p className="attachment-help">Hỗ trợ .doc, .docx hoặc .pdf, dưới 3 MB. Vui lòng sử dụng tệp không có mật khẩu bảo vệ.</p>

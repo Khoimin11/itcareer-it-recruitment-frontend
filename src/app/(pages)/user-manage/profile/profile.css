@@ -1,0 +1,49 @@
+.personal-profile .attachment-page-heading > .attachment-outline { flex-shrink: 0; }
+.personal-identity { display: flex; align-items: center; gap: 28px; }
+.personal-avatar { width: 128px; flex-shrink: 0; }
+.personal-avatar .filepond--root { margin-bottom: 0; font-family: inherit; }
+.personal-avatar .filepond--panel-root { border-radius: 16px; background: #eff6ff; border: 1px dashed #bfdbfe; }
+.personal-avatar .filepond--drop-label { color: #0070d8; font-size: 13px; }
+.personal-avatar .filepond--label-action { text-decoration-color: #bfdbfe; }
+.personal-identity-content { min-width: 0; }
+.personal-identity-content h2 { color: #111827; font-size: 25px; font-weight: 700; margin-top: 4px; overflow-wrap: anywhere; }
+.personal-role { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #0061bd; border-radius: 6px; background: #eff6ff; padding: 4px 9px; margin-top: 8px; }
+.personal-role svg { width: 14px; height: 14px; stroke-width: 1.5; }
+.personal-identity-content p { font-size: 13px; color: #64748b; margin-top: 12px; line-height: 1.7; }
+.personal-identity-content .personal-image-help { font-size: 12px; margin-top: 4px; }
+.personal-section-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.personal-section-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: #0070d8; flex-shrink: 0; }
+.personal-section-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.personal-section-heading h2 { font-size: 19px; font-weight: 600; color: #111827; }
+.personal-section-heading p { margin-top: 6px; font-size: 13px; color: #64748b; line-height: 1.7; }
+.personal-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.personal-field-wide { grid-column: 1 / -1; }
+.personal-field > label { display: block; font-size: 13px; font-weight: 500; color: #475569; margin-bottom: 8px; }
+.personal-field > label > span, .personal-save-row strong { color: #b42318; }
+.personal-input-wrap { position: relative; }
+.personal-input-wrap > svg { position: absolute; left: 14px; top: 15px; width: 18px; height: 18px; color: #94a3b8; stroke-width: 1.5; pointer-events: none; }
+.personal-input-wrap input { width: 100%; height: 48px; padding: 12px 14px 12px 42px; border: 1px solid #dbe1ea; border-radius: 10px; background: white; color: #25304a; font-size: 14px; transition: border-color .15s, box-shadow .15s; }
+.personal-input-wrap input::placeholder { color: #94a3b8; }
+.personal-input-wrap input:hover { border-color: #b6c2d3; }
+.personal-input-wrap input:focus { border-color: #0070d8; box-shadow: 0 0 0 3px #eff6ff; }
+.personal-input-wrap:focus-within > svg { color: #0070d8; }
+.personal-fields:disabled { opacity: .65; }
+.personal-field .just-validate-error-label { font-size: 12px; margin-top: 7px; }
+.personal-save-row { display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding-top: 22px; margin-top: 28px; border-top: 1px solid #edf0f4; }
+.personal-save-row > span { font-size: 12px; color: #64748b; }
+.personal-save-row button:disabled { opacity: .7; cursor: wait; }
+.personal-empty { text-align: center; padding-top: 32px; padding-bottom: 32px; }
+.personal-empty h2 { font-weight: 600; font-size: 19px; margin-top: 16px; }
+.personal-empty p { margin: 10px 0 20px; color: #64748b; font-size: 14px; }
+@media (max-width: 640px) {
+  .personal-profile .attachment-page-heading { flex-direction: column; align-items: flex-start; }
+  .personal-identity { align-items: flex-start; gap: 16px; }
+  .personal-avatar { width: 96px; }
+  .personal-identity-content h2 { font-size: 21px; }
+  .personal-fields { grid-template-columns: 1fr; gap: 20px; }
+  .personal-input-wrap input { font-size: 16px; }
+  .personal-save-row { flex-direction: column; align-items: stretch; }
+  .personal-save-row .attachment-primary { width: 100%; }
+}
+@media (max-width: 380px) { .personal-identity { flex-direction: column; } }
+@media (prefers-reduced-motion: reduce) { .personal-input-wrap input { transition: none; } }

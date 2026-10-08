@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaAngleDown, FaArrowRight, FaBuilding, FaUser } from "react-icons/fa6";
-import { FiBriefcase, FiFileText, FiLogOut, FiPaperclip, FiSettings, FiUser } from "react-icons/fi";
+import { FiBriefcase, FiClipboard, FiFileText, FiLogOut, FiPaperclip, FiSettings, FiUser } from "react-icons/fi";
 import { toast } from "sonner";
 
 export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
@@ -61,7 +61,7 @@ export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
         <div className="account-panel-heading"><strong>{name}</strong><span>{isCompany ? "Nhà tuyển dụng" : "Ứng viên"}</span></div>
         <Link href={profilePath} onClick={onNavigate}>{isCompany ? <FiBriefcase aria-hidden="true" /> : <FiUser aria-hidden="true" />}{isCompany ? "Thông tin công ty" : "Thông tin cá nhân"}</Link>
         {!isCompany && <Link href="/user-manage/attachments" onClick={onNavigate}><FiPaperclip aria-hidden="true" />Hồ sơ đính kèm</Link>}
-        {isCompany && <Link href="/company-manage/job/list" onClick={onNavigate}>Quản lý công việc</Link>}
+        {isCompany && <Link href="/company-manage/job/list" onClick={onNavigate}><FiClipboard aria-hidden="true" />Quản lý công việc</Link>}
         <Link href={isCompany ? "/company-manage/cv/list" : "/user-manage/cv/list"} onClick={onNavigate}><FiFileText aria-hidden="true" />{isCompany ? "Quản lý CV" : "CV đã ứng tuyển"}</Link>
         {!isCompany && <button type="button" className="account-option"><FiSettings aria-hidden="true" />Cài đặt</button>}
         <button type="button" className="account-logout" disabled={isLoggingOut} onClick={handleLogout}><FiLogOut aria-hidden="true" />{isLoggingOut ? "Đang đăng xuất…" : "Đăng xuất"}</button>
