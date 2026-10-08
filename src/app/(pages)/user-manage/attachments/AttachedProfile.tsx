@@ -126,18 +126,26 @@ export const AttachedProfile = () => {
         <div className="attachment-letter">{letter || "Thêm một vài dòng giới thiệu về bạn và định hướng nghề nghiệp."}</div>
       </section>
 
-      <dialog ref={dialogRef} className={`attachment-dialog ${editor === "preview" ? "attachment-dialog-preview" : ""}`} onClose={() => setEditor(null)} onClick={event => { if (event.target === event.currentTarget) setEditor(null); }} aria-labelledby="attachment-dialog-title">
+      <dialog ref={dialogRef} className={`attachment-dialog ${editor === "preview" ? "attachment-dialog-preview" : ""}`} onClose={() => setEditor(null)} onClick={event => {
+        if (event.target !== event.currentTarget) return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) setEditor(null);
+      }} aria-labelledby="attachment-dialog-title">
         <div className="attachment-dialog-heading"><h2 id="attachment-dialog-title">{editor === "basic" ? "Thông tin cơ bản" : editor === "general" ? "Thông tin chung" : editor === "letter" ? "Thư giới thiệu bản thân" : "Xem CV"}</h2><button type="button" className="attachment-edit" aria-label="Đóng" onClick={() => setEditor(null)}><FiX aria-hidden="true" /></button></div>
-        {editor === "preview" ? <div className="attachment-preview">
+        <div className="attachment-dialog-content">
+        {editor === "preview" ? <><div className="attachment-preview attachment-dialog-body">
           {cv && cvUrl ? <>{/\.pdf$/i.test(cv.name) ? <iframe src={cvUrl} title="Bản xem trước CV cá nhân" /> : <p>Tệp Word đã được chọn. Tải tệp xuống để xem bằng ứng dụng hỗ trợ.</p>}<a className="attachment-outline" href={cvUrl} download={cv.name}><FiDownload aria-hidden="true" />Tải CV xuống</a></> : <article className="attachment-resume"><span className="attachment-eyebrow">Bản xem trước CV mẫu</span><h3>{basic.fullName}</h3><p>{basic.title}</p><p>{basic.email} · {basic.phone}</p><hr /><h4>Giới thiệu</h4><p>Lập trình viên Full-stack với định hướng xây dựng ứng dụng web hiện đại, có khả năng làm việc với ReactJS, Next.js và Node.js.</p><h4>Học vấn</h4><p>{general.education}<br />{general.major}</p><h4>Kỹ năng</h4><Tags text={general.skills} /><h4>Dự án tiêu biểu</h4><p><strong>ITcareer — Nền tảng tuyển dụng IT</strong><br />Xây dựng giao diện tìm kiếm việc làm, hồ sơ ứng viên và trang quản lý dành cho nhà tuyển dụng.</p></article>}
-        </div> : <form onSubmit={event => { event.preventDefault(); saveSection(); }}>
+        </div><div className="attachment-dialog-actions"><button type="button" className="attachment-outline" onClick={() => setEditor(null)}>Đóng</button></div></> : <form className="attachment-dialog-form" onSubmit={event => { event.preventDefault(); saveSection(); }}>
+          <div className="attachment-dialog-body">
           <div className="attachment-form-grid">
             {editor === "basic" && basicFields.map(field => <label key={field.key}>{field.label}<input type={field.type || "text"} required value={draftBasic[field.key]} onChange={event => setDraftBasic({ ...draftBasic, [field.key]: event.target.value })} /></label>)}
             {editor === "general" && generalFields.map(field => <label key={field.key}>{field.label}<input value={draftGeneral[field.key]} onChange={event => setDraftGeneral({ ...draftGeneral, [field.key]: event.target.value })} />{["skills", "industries", "workingForms", "languages"].includes(field.key) && <small>Phân cách các mục bằng dấu phẩy.</small>}</label>)}
             {editor === "letter" && <label className="attachment-form-wide">Nội dung thư giới thiệu<textarea rows={12} maxLength={5000} value={draftLetter} onChange={event => setDraftLetter(event.target.value)} /><small>{draftLetter.length}/5.000 ký tự</small></label>}
           </div>
+          </div>
           <div className="attachment-dialog-actions"><button type="button" className="attachment-outline" onClick={() => setEditor(null)}>Hủy</button><button type="submit" className="attachment-primary"><FiCheck aria-hidden="true" />Lưu thay đổi</button></div>
         </form>}
+        </div>
       </dialog>
     </div>
   </main>;
