@@ -111,7 +111,7 @@ export const AttachedProfile = () => {
       <section className="attachment-card" aria-labelledby="cv-heading">
         <div className="attachment-section-heading"><h2 id="cv-heading">CV của tôi</h2><span className="attachment-tag">CV cá nhân</span></div>
         <div className="attachment-cv-file"><span className="attachment-file-icon"><FiFileText aria-hidden="true" /></span><div className="attachment-file-info"><button type="button" onClick={() => startEdit("preview")}>{cvName}</button><p>Cập nhật lần cuối: {cvDate}{cv && ` · ${(cv.size / 1024).toFixed(0)} KB`}</p></div><button type="button" className="attachment-edit" aria-label="Xem CV" onClick={() => startEdit("preview")}><FiEye aria-hidden="true" /></button></div>
-        <div className="attachment-upload-row"><input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="attachment-file-input" aria-label="Chọn CV cá nhân" onChange={chooseCV} /><button type="button" className="attachment-outline" onClick={() => fileRef.current?.click()}><FiUpload aria-hidden="true" />{cv ? "Thay CV khác" : "Tải CV lên"}</button><span>Chỉ giữ một CV. Tệp mới sẽ thay thế tệp hiện tại.</span></div>
+        <div className="attachment-upload-row"><input ref={fileRef} type="file" accept=".pdf,.doc,.docx" className="attachment-file-input" aria-label="Chọn CV cá nhân" onChange={chooseCV} /><button type="button" className="attachment-outline" onClick={() => fileRef.current?.click()}><FiUpload aria-hidden="true" />{cv ? "Thay CV khác" : "Tải CV lên"}</button></div>
         <p className="attachment-help">Hỗ trợ .doc, .docx hoặc .pdf, dưới 3 MB. Vui lòng sử dụng tệp không có mật khẩu bảo vệ.</p>
         {fileError && <p className="attachment-error" role="alert">{fileError}</p>}
       </section>
