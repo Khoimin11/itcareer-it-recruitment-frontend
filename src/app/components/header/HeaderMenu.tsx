@@ -60,8 +60,8 @@ export const HeaderMenu = (
           link: "#",
           children: [
             { name: "Hà Nội", link: "/search?city=Hà Nội" },
-            { name: "Đà Nẵng", link: "/search?city=Đà Nẵng" },
-            { name: "Hồ Chí Minh", link: "/search?city=Hồ Chí Minh" }
+            { name: "Đà Nẵng", link: "/search?city=Thành phố Đà Nẵng" },
+            { name: "Hồ Chí Minh", link: "/search?city=Thành phố Hồ Chí Minh" }
           ]
         }
       ]
