@@ -93,7 +93,7 @@ export const FormApply = ({ jobId }: { jobId: string }) => {
             <button type="button" className={`job-apply-choice ${source === "upload" ? "is-selected" : ""}`} aria-pressed={source === "upload"} onClick={chooseUpload}><span className="job-apply-choice-icon"><FiUploadCloud aria-hidden="true" /></span><span><strong>Tải lên</strong><small>Chọn CV từ thiết bị của bạn</small></span><span className="job-apply-choice-check" aria-hidden="true">{source === "upload" && <FiCheck />}</span></button>
           </div>
           <input ref={fileInput} type="file" accept=".pdf,application/pdf" hidden onChange={chooseFile} aria-label="Chọn CV từ thiết bị" />
-          {currentFile && <div className="job-apply-selected-file"><FiFileText aria-hidden="true" /><div><strong>{currentFile.name}</strong><span>{(currentFile.size / 1024).toFixed(0)} KB · PDF</span></div>{source === "upload" && <button type="button" aria-label="Bỏ CV đã chọn" onClick={() => setFile(null)}><FiX aria-hidden="true" /></button>}</div>}
+          {currentFile && <div className="job-apply-selected-file"><FiFileText aria-hidden="true" /><div><strong>{currentFile.name}</strong><span>{(currentFile.size / 1024).toFixed(0)} KB · PDF</span></div>{source === "upload" && <button type="button" aria-label="Bỏ CV đã chọn" onClick={() => { setFile(null); setSource(null); setFileError(""); }}><FiX aria-hidden="true" /></button>}</div>}
           <p className="job-apply-help">Hỗ trợ PDF, tối đa 5 MB.</p>
           {profileError && <p className="job-apply-help" role="status">{profileError}</p>}
           {fileError && <p className="job-apply-error" role="alert">{fileError}</p>}

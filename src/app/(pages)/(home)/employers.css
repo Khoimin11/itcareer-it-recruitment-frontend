@@ -1,0 +1,13 @@
+.employer-reveal { min-width: 0; }
+.employer-reveal > a { height: 100%; }
+.employers-animated .employer-reveal {
+  opacity: 0;
+  transform: translateY(-28px);
+  transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1);
+  transition-delay: var(--employer-delay, 0ms);
+}
+.employers-animated .employer-reveal.is-visible,
+.employers-animated .employer-reveal:focus-within { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .employers-animated .employer-reveal { opacity: 1; transform: none; transition: none; }
+}
