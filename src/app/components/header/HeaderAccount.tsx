@@ -63,7 +63,7 @@ export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
         {!isCompany && <Link href="/user-manage/attachments" onClick={onNavigate}><FiPaperclip aria-hidden="true" />Hồ sơ đính kèm</Link>}
         {isCompany && <Link href="/company-manage/job/list" onClick={onNavigate}><FiClipboard aria-hidden="true" />Quản lý công việc</Link>}
         <Link href={isCompany ? "/company-manage/cv/list" : "/user-manage/cv/list"} onClick={onNavigate}><FiFileText aria-hidden="true" />{isCompany ? "Quản lý CV" : "CV đã ứng tuyển"}</Link>
-        {!isCompany && <button type="button" className="account-option"><FiSettings aria-hidden="true" />Cài đặt</button>}
+        {!isCompany && <Link href="/user-manage/settings" onClick={onNavigate}><FiSettings aria-hidden="true" />Cài đặt</Link>}
         <button type="button" className="account-logout" disabled={isLoggingOut} onClick={handleLogout}><FiLogOut aria-hidden="true" />{isLoggingOut ? "Đang đăng xuất…" : "Đăng xuất"}</button>
       </div>
     </details>
