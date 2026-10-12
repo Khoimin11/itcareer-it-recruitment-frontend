@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import JustValidate from "just-validate";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -185,10 +186,18 @@ export const FormRegiter = () => {
           </div>
         </div>
         <div className="">
+          <label className="mb-[15px] flex min-h-[32px] cursor-pointer items-center gap-2 text-[14px] leading-6 text-slate-500">
+            <input type="checkbox" className="h-[18px] w-[18px] shrink-0 cursor-pointer accent-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]" />
+            <span>Tôi chấp nhận các điều khoản và điều kiện</span>
+          </label>
           <button type="submit" className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
             Đăng ký
           </button>
         </div>
+        <p className="mt-1 text-center text-[14px] leading-6 text-slate-500">
+          Bạn đã có tài khoản?{" "}
+          <Link href="/user/login" className="rounded font-semibold text-[#0070d8] underline underline-offset-4 hover:text-[#005eb8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]">Đăng nhập</Link>
+        </p>
       </form>
     </>
   )

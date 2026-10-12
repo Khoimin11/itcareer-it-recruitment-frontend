@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import JustValidate from "just-validate";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -121,11 +122,22 @@ export const FormLogin = () => {
             </button>
           </div>
         </div>
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[14px] text-slate-500">
+          <label className="flex min-h-[32px] cursor-pointer items-center gap-2">
+            <input type="checkbox" className="h-[18px] w-[18px] cursor-pointer accent-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]" />
+            <span>Nhớ mật khẩu</span>
+          </label>
+          <button type="button" className="min-h-[32px] rounded hover:text-[#0070d8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]">Quên mật khẩu?</button>
+        </div>
         <div className="">
           <button className="bg-[#0088FF] rounded-[4px] w-[100%] h-[48px] px-[20px] font-[700] text-[16px] text-white">
             Đăng nhập
           </button>
         </div>
+        <p className="mt-1 text-center text-[14px] leading-6 text-slate-500">
+          Bạn chưa có tài khoản?{" "}
+          <Link href={`/user/register?returnTo=${encodeURIComponent(redirectPath)}`} className="rounded font-semibold text-[#0070d8] underline underline-offset-4 hover:text-[#005eb8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]">Tạo tài khoản</Link>
+        </p>
       </form>
     </>
   )
