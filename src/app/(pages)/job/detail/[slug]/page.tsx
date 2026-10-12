@@ -2,9 +2,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { positionList, workingFormList } from "@/config/variable"
 import { Metadata } from "next"
+import { cookies } from "next/headers";
 import Link from "next/link"
 import { FaArrowRightLong, FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { FormApply } from "./FormApply"
+import { ApplyButton } from "./ApplyButton";
+import { FiSend } from "react-icons/fi";
 
 export const metadata: Metadata = {
   title: "Chi tiết công việc",
@@ -17,6 +20,23 @@ export default async function JobDetailPage({ params }: {
   }>
 }) {
   const { slug } = await params;
+  const token = (await cookies()).get("token")?.value;
+  let canApply = !token;
+  if (token) {
+    try {
+      const authResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check`, {
+        headers: { Cookie: `token=${encodeURIComponent(token)}` },
+        cache: "no-store",
+      });
+      if (authResponse.ok) {
+        const auth = await authResponse.json();
+        canApply = auth.code === "error" || (auth.code === "success" && Boolean(auth.infoUser) && !auth.infoCompany);
+      }
+    } catch {
+      // Keep application controls hidden until the signed-in account's role can be verified.
+      canApply = false;
+    }
+  }
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job/detail/${slug}`);
   const data = await res.json();
 
@@ -49,9 +69,7 @@ export default async function JobDetailPage({ params }: {
                   <div className="font-[700] text-[20px] text-[#0088FF] sm:mb-[20px] mb-[10px]">
                     {jobDetail.salaryMin.toLocaleString("vi-VN")}$ - {jobDetail.salaryMax.toLocaleString("vi-VN")}$
                   </div>
-                  <Link href="#form-apply" className="bg-[#0088FF] rounded-[4px] font-[700] text-[16px] text-white flex items-center justify-center h-[48px] mb-[20px]">
-                    Ứng tuyển
-                  </Link>
+                  {canApply && <ApplyButton />}
                   <div className="grid grid-cols-3 sm:gap-[16px] gap-[8px] mb-[20px]">
                     {jobDetail.images.map((image: string, index: number) => (
                       <img 
@@ -90,12 +108,10 @@ export default async function JobDetailPage({ params }: {
                 {/* Hết Mô tả chi tiết */}
 
                 {/* Form ứng tuyển */}
-                <div id="form-apply" className="border border-[#DEDEDE] rounded-[8px] p-[20px] mt-[20px]">
-                  <h2 className="font-[700] text-[20px] text-black mb-[20px]">
-                    Ứng tuyển ngay
-                  </h2>
+                {canApply && <section id="form-apply" className="job-apply-section" aria-labelledby="apply-heading">
+                  <div className="job-apply-heading"><span><FiSend aria-hidden="true" /></span><h2 id="apply-heading">Ứng tuyển ngay</h2></div>
                   <FormApply jobId={jobDetail.id} />
-                </div>
+                </section>}
                 {/* Hết Form ứng tuyển */}
               </div>
               {/* Right */}
