@@ -7,6 +7,13 @@ export const useAuth = () => {
   const [infoUser, setInfoUser] = useState<any>();
   const [infoCompany, setInfoCompany] = useState<any>();
   const pathname = usePathname(); // Lấy URL hiện tại
+  const [revision, setRevision] = useState(0);
+
+  useEffect(() => {
+    const refresh = () => setRevision(value => value + 1);
+    window.addEventListener("profile-updated", refresh);
+    return () => window.removeEventListener("profile-updated", refresh);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -53,7 +60,7 @@ export const useAuth = () => {
       });
 
     return () => controller.abort();
-  }, [pathname]);
+  }, [pathname, revision]);
 
   return { isLogin, infoUser, infoCompany };
 }
