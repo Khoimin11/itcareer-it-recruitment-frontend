@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaAngleDown, FaArrowRight, FaBuilding, FaUser } from "react-icons/fa6";
-import { FiBriefcase, FiClipboard, FiFileText, FiLogOut, FiPaperclip, FiSettings, FiUser } from "react-icons/fi";
+import { FiBell, FiBriefcase, FiClipboard, FiFileText, FiLogOut, FiMessageSquare, FiPaperclip, FiSettings, FiUser } from "react-icons/fi";
 import { toast } from "sonner";
 
 export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
@@ -43,6 +43,11 @@ export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
     </div>;
   }
   return (
+    <div className="header-user-actions">
+      <div className="header-utility-actions" role="group" aria-label="Chat và thông báo">
+        <button type="button" className="header-utility-button" aria-label="Chat" title="Chat"><FiMessageSquare aria-hidden="true" /></button>
+        <button type="button" className="header-utility-button" aria-label="Thông báo" title="Thông báo"><FiBell aria-hidden="true" /></button>
+      </div>
     <details className="header-account account-menu" onClick={event => {
       if ((event.target as HTMLElement).closest("a")) {
         event.currentTarget.open = false;
@@ -67,5 +72,6 @@ export const HeaderAccount = ({ onNavigate }: { onNavigate?: () => void }) => {
         <button type="button" className="account-logout" disabled={isLoggingOut} onClick={handleLogout}><FiLogOut aria-hidden="true" />{isLoggingOut ? "Đang đăng xuất…" : "Đăng xuất"}</button>
       </div>
     </details>
+    </div>
   );
 };

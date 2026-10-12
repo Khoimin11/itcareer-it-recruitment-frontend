@@ -3,6 +3,14 @@
 .header-row { display: flex; align-items: center; gap: 24px; min-height: 80px; }
 .header-brand { font-size: 28px; font-weight: 800; letter-spacing: -.8px; flex-shrink: 0; }
 .header-account-container { margin-left: auto; flex-shrink: 0; }
+.header-user-actions { display: flex; align-items: center; gap: 12px; }
+.header-utility-actions { display: flex; align-items: center; gap: 4px; }
+.header-utility-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 10px; color: #eceeff; background: transparent; transition: background .18s, color .18s; }
+.header-utility-button:hover { background: rgba(255,255,255,.1); color: white; }
+.header-utility-button:active { background: rgba(255,255,255,.16); }
+.header-utility-button svg { width: 22px; height: 22px; stroke-width: 1.5; }
+.mobile-menu-account .header-utility-actions { display: none; }
+.mobile-menu-account .header-user-actions { display: block; }
 .site-header :is(a, button, summary) { -webkit-tap-highlight-color: transparent; }
 .site-header :is(a, button, summary):focus-visible { outline: 3px solid #38bdf8; outline-offset: 3px; }
 .site-header summary { list-style: none; cursor: pointer; }
@@ -76,10 +84,20 @@
   .mobile-menu-account .account-panel { position: static; width: 100%; box-shadow: none; margin-top: 8px; }
 }
 @media (max-width: 639px) {
+  .header-user-actions { gap: 6px; }
+  .header-utility-actions { gap: 0; }
+  .header-utility-button { width: 40px; }
   .header-row { min-height: 64px; gap: 8px; }
   .header-brand { font-size: 22px; }
   .header-account-container .auth-register { display: none; }
   .header-account-container .auth-login { padding: 0 12px; font-size: 12px; }
   .header-account-container .account-name { display: none; }
+}
+@media (max-width: 379px) {
+  .header-container { padding: 0 12px; }
+  .header-brand { font-size: 20px; }
+  .header-row { gap: 6px; }
+  .header-utility-button { width: 36px; }
+  .header-menu-toggle { min-width: 40px; }
 }
 @media (prefers-reduced-motion: reduce) { .site-header * { transition: none !important; } }
