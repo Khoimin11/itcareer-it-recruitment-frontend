@@ -59,7 +59,8 @@ export const FormLogin = () => {
 
         const dataFinal = {
           email: email,
-          password: password
+          password: password,
+          rememberPassword: event.target.rememberPassword.checked
         };
   
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
@@ -81,7 +82,8 @@ export const FormLogin = () => {
             }
           })
       });
-  }, []);
+    return () => validator.destroy();
+  }, [redirectPath, router]);
 
   return (
     <>
@@ -124,7 +126,7 @@ export const FormLogin = () => {
         </div>
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[14px] text-slate-500">
           <label className="flex min-h-[32px] cursor-pointer items-center gap-2">
-            <input type="checkbox" className="h-[18px] w-[18px] cursor-pointer accent-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]" />
+            <input type="checkbox" name="rememberPassword" className="h-[18px] w-[18px] cursor-pointer accent-[#0088FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]" />
             <span>Nhớ mật khẩu</span>
           </label>
           <button type="button" className="min-h-[32px] rounded hover:text-[#0070d8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0088FF]">Quên mật khẩu?</button>
